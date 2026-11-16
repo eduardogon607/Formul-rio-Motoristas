@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastro de Transportador</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+  body { background: linear-gradient(135deg, #1e3c72, #2a5298); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+  .container { background: #fff; width: 100%; max-width: 600px; padding: 0 35px 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden; }
+  .logo-area { display: flex; justify-content: center; align-items: center; padding: 25px 0 20px; border-bottom: 1px solid #eee; margin-bottom: 22px; }
+  .logo-area img { max-width: 200px; max-height: 90px; object-fit: contain; }
+  .logo-placeholder { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 700; color: #1e3c72; letter-spacing: 0.5px; }
+  .logo-placeholder .logo-icon { width: 42px; height: 42px; border-radius: 10px; background: linear-gradient(135deg, #1e3c72, #2a5298); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.3rem; }
+  h2 { text-align: center; color: #1e3c72; margin-bottom: 25px; font-size: 1.5rem; }
+  .form-group { margin-bottom: 18px; }
+  label { display: block; margin-bottom: 6px; font-weight: 600; color: #333; font-size: 0.92rem; }
+  input, select { width: 100%; padding: 11px 12px; border: 1.5px solid #ccc; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; background-color: #fff; }
+  input:focus, select:focus { outline: none; border-color: #2a5298; box-shadow: 0 0 0 3px rgba(42,82,152,0.15); }
+  input.invalid, select.invalid { border-color: #e74c3c; background: #fff5f5; }
+  .error-message { color: #e74c3c; font-size: 0.8rem; margin-top: 4px; display: none; }
+  .error-message.show { display: block; }
+  button { width: 100%; padding: 13px; background: #1e3c72; color: #fff; border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 600; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+  button:hover { background: #2a5298; }
+  button:disabled { background: #95a5a6; cursor: not-allowed; }
+  .success-box { display: none; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 15px; border-radius: 8px; margin-top: 18px; font-size: 0.92rem; white-space: pre-wrap; }
+  .success-box.show { display: block; }
+  .error-box { display: none; background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 15px; border-radius: 8px; margin-top: 18px; }
+  .error-box.show { display: block; }
+  .row { display: flex; gap: 12px; }
+  .row .form-group { flex: 1; }
+  @media (max-width: 500px) { .row { flex-direction: column; gap: 0; } .container { padding: 0 20px 22px; } .logo-area img { max-width: 160px; max-height: 70px; } }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="logo-area">
+    <!-- 👇 SUBSTITUA PELA SUA LOGO -->
+    <div class="logo-placeholder">
+      <img src="Logo cbt.png" alt="Logo da Empresa">
+    </div>
+  </div>
+
+  <h2>Cadastro de Transportador</h2>
+
+  <form id="formTransportador" novalidate>
+
+    <div class="form-group">
+      <label for="nome">1. Nome completo *</label>
+      <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo">
+      <span class="error-message" id="erro-nome"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="cpf">2. CPF *</label>
+      <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14">
+      <span class="error-message" id="erro-cpf"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="celular">3. Número de celular *</label>
+      <input type="text" id="celular" name="celular" placeholder="(00) 00000-0000" maxlength="15">
+      <span class="error-message" id="erro-celular"></span>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label for="placaCavalo">4. Placa do cavalo *</label>
+        <input type="text" id="placaCavalo" name="placaCavalo" placeholder="ABC1D23" maxlength="7">
+        <span class="error-message" id="erro-placaCavalo"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="placaCarreta">5. Placa da carreta *</label>
+        <input type="text" id="placaCarreta" name="placaCarreta" placeholder="ABC1D23" maxlength="7">
+        <span class="error-message" id="erro-placaCarreta"></span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="eixos">6. Quantidades de eixos do conjunto *</label>
+      <select id="eixos" name="eixos">
+        <option value="">Selecione...</option>
+        <option value="2">2 eixos</option>
+        <option value="3">3 eixos</option>
+        <option value="4">4 eixos</option>
+        <option value="5">5 eixos</option>
+        <option value="6">6 eixos</option>
+        <option value="7">7 eixos</option>
+        <option value="8">8 eixos</option>
+        <option value="9">9 eixos</option>
+      </select>
+      <span class="error-message" id="erro-eixos"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="antt">7. ANTT Jurídica ou Física *</label>
+      <select id="antt" name="antt">
+        <option value="">Selecione...</option>
+        <option value="Jurídica">Jurídica</option>
+        <option value="Física">Física</option>
+      </select>
+      <span class="error-message" id="erro-antt"></span>
+    </div>
+
+    <!-- NOVOS CAMPOS AQUI -->
+    <div class="form-group">
+      <label for="padPreferencial">8. Escolha o PAD da sua preferência *</label>
+      <select id="padPreferencial" name="padPreferencial">
+        <option value="">Selecione o PAD principal...</option>
+        <option value="FOR - Caucaia-CE">FOR - Caucaia-CE</option>
+        <option value="REC - Jaboatão dos Guararapes-PE">REC - Jaboatão dos Guararapes-PE</option>
+        <option value="SIF - Simoes Filho-BA">SIF - Simoes Filho-BA</option>
+        <option value="GOI - Anapolis-GO">GOI - Anapolis-GO</option>
+        <option value="CBA - Cuiabá-MT">CBA - Cuiabá-MT</option>
+        <option value="RFJ - Regente Feijó-SP">RFJ - Regente Feijó-SP</option>
+        <option value="CPV - Paulinia-SP">CPV - Paulinia-SP</option>
+        <option value="RIO - Duque de Caxias-RJ">RIO - Duque de Caxias-RJ</option>
+        <option value="BHZ - Betim-MG">BHZ - Betim-MG</option>
+        <option value="ITJ - Itajai-SC">ITJ - Itajai-SC</option>
+      </select>
+      <span class="error-message" id="erro-padPreferencial"></span>
+    </div>
+
+    <div class="form-group">
+  <label for="padAlternativo">9. Caso não esteja disponível o PAD escolhido anteriormente, escolha uma segunda opção *</label>
+  <input type="text" id="padAlternativo" name="padAlternativo" placeholder="Digite aqui sua segunda opção ou observação">
+  <span class="error-message" id="erro-padAlternativo"></span>
+</div>
+
+    <button type="submit" id="btnEnviar">Enviar Cadastro</button>
+
+    <div class="success-box" id="successBox"></div>
+    <div class="error-box" id="errorBox"></div>
+  </form>
+</div>
+
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbybN7wTU97IdVVxCRbjoS86tzgBnFTA3NA8vW3JZT1gufDqBvSt92Yw0vrYj3LoaelI/exec";
+
+  const form = document.getElementById('formTransportador');
+  const successBox = document.getElementById('successBox');
+  const errorBox = document.getElementById('errorBox');
+  const btnEnviar = document.getElementById('btnEnviar');
+
+  // Máscaras
+  document.getElementById('cpf').addEventListener('input', (e) => {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+    v = v.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    e.target.value = v;
+  });
+
+  document.getElementById('celular').addEventListener('input', (e) => {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+    if (v.length > 10) v = v.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
+    else if (v.length > 6) v = v.replace(/^(\d{2})(\d{4})(\d{0,4})$/, '($1) $2-$3');
+    else if (v.length > 2) v = v.replace(/^(\d{2})(\d{0,5})$/, '($1) $2');
+    else if (v.length > 0) v = v.replace(/^(\d{0,2})$/, '($1');
+    e.target.value = v;
+  });
+
+  function mascaraPlaca(input) {
+    input.addEventListener('input', (e) => {
+      e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 7);
+    });
+  }
+  mascaraPlaca(document.getElementById('placaCavalo'));
+  mascaraPlaca(document.getElementById('placaCarreta'));
+
+  // Validações
+  function validarCPF(cpf) {
+    cpf = cpf.replace(/\D/g, '');
+    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+    let soma = 0, resto;
+    for (let i = 1; i <= 9; i++) soma += parseInt(cpf[i - 1]) * (11 - i);
+    resto = (soma * 10) % 11; if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf[9])) return false;
+    soma = 0;
+    for (let i = 1; i <= 10; i++) soma += parseInt(cpf[i - 1]) * (12 - i);
+    resto = (soma * 10) % 11; if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf[10])) return false;
+    return true;
+  }
+
+  function validarPlaca(placa) { return /^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/.test(placa); }
+
+  function mostrarErro(idCampo, idErro, msg) {
+    document.getElementById(idCampo).classList.add('invalid');
+    const el = document.getElementById(idErro); el.textContent = msg; el.classList.add('show');
+  }
+  function limparErro(idCampo, idErro) {
+    document.getElementById(idCampo).classList.remove('invalid');
+    const el = document.getElementById(idErro); el.textContent = ''; el.classList.remove('show');
+  }
+
+  function validarFormulario() {
+    let valido = true;
+    const nome = document.getElementById('nome').value.trim();
+    if (nome.length < 3 || !nome.includes(' ')) { mostrarErro('nome', 'erro-nome', 'Informe seu nome completo.'); valido = false; } else limparErro('nome', 'erro-nome');
+
+    const cpf = document.getElementById('cpf').value;
+    if (!validarCPF(cpf)) { mostrarErro('cpf', 'erro-cpf', 'CPF inválido.'); valido = false; } else limparErro('cpf', 'erro-cpf');
+
+    const celular = document.getElementById('celular').value.replace(/\D/g, '');
+    if (celular.length < 10 || celular.length > 11) { mostrarErro('celular', 'erro-celular', 'Celular inválido.'); valido = false; } else limparErro('celular', 'erro-celular');
+
+    const placaCavalo = document.getElementById('placaCavalo').value;
+    if (!validarPlaca(placaCavalo)) { mostrarErro('placaCavalo', 'erro-placaCavalo', 'Placa inválida.'); valido = false; } else limparErro('placaCavalo', 'erro-placaCavalo');
+
+    const placaCarreta = document.getElementById('placaCarreta').value;
+    if (!validarPlaca(placaCarreta)) { mostrarErro('placaCarreta', 'erro-placaCarreta', 'Placa inválida.'); valido = false; } else limparErro('placaCarreta', 'erro-placaCarreta');
+
+    const eixos = document.getElementById('eixos').value;
+    if (!eixos) { mostrarErro('eixos', 'erro-eixos', 'Selecione.'); valido = false; } else limparErro('eixos', 'erro-eixos');
+
+    const antt = document.getElementById('antt').value;
+    if (!antt) { mostrarErro('antt', 'erro-antt', 'Selecione.'); valido = false; } else limparErro('antt', 'erro-antt');
+
+    const padPref = document.getElementById('padPreferencial').value;
+    if (!padPref) { mostrarErro('padPreferencial', 'erro-padPreferencial', 'Selecione o PAD principal.'); valido = false; } else limparErro('padPreferencial', 'erro-padPreferencial');
+
+    const padAlt = document.getElementById('padAlternativo').value;
+    if (!padAlt) { mostrarErro('padAlternativo', 'erro-padAlternativo', 'Selecione o PAD alternativo.'); valido = false; } else limparErro('padAlternativo', 'erro-padAlternativo');
+
+    return valido;
+  }
+
+  // Envio
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    successBox.classList.remove('show');
+    errorBox.classList.remove('show');
+
+    if (!validarFormulario()) {
+      const primeiroInvalido = document.querySelector('.invalid');
+      if (primeiroInvalido) { primeiroInvalido.scrollIntoView({ behavior: 'smooth', block: 'center' }); primeiroInvalido.focus(); }
+      return;
+    }
+
+    const dados = {
+      nome: document.getElementById('nome').value.trim(),
+      cpf: document.getElementById('cpf').value,
+      celular: document.getElementById('celular').value,
+      placaCavalo: document.getElementById('placaCavalo').value,
+      placaCarreta: document.getElementById('placaCarreta').value,
+      eixos: document.getElementById('eixos').value,
+      antt: document.getElementById('antt').value,
+      padPreferencial: document.getElementById('padPreferencial').value,
+      padAlternativo: document.getElementById('padAlternativo').value
+    };
+
+    btnEnviar.textContent = "Enviando..."; btnEnviar.disabled = true;
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(dados).toString()
+      });
+
+      successBox.textContent = '✅ Cadastro enviado com sucesso!\n\nNome: ' + dados.nome + '\nPAD Principal: ' + dados.padPreferencial + '\nPAD Alternativo: ' + dados.padAlternativo;
+      successBox.classList.add('show');
+      successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      form.reset();
+
+    } catch (error) {
+      errorBox.textContent = '❌ Ocorreu um erro ao enviar os dados. Tente novamente.';
+      errorBox.classList.add('show');
+      errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } finally {
+      btnEnviar.textContent = "Enviar Cadastro"; btnEnviar.disabled = false;
+    }
+  });
+
+  form.querySelectorAll('input, select').forEach(campo => {
+    campo.addEventListener('input', () => {
+      if (campo.id) {
+        const erro = document.getElementById('erro-' + campo.id);
+        if (erro) { campo.classList.remove('invalid'); erro.classList.remove('show'); }
+      }
+    });
+  });
+</script>
+</body>
+</html>
+
+
+
+
+
