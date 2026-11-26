@@ -105,9 +105,15 @@
       <span class="error-message" id="erro-antt"></span>
     </div>
 
-    <!-- NOVOS CAMPOS AQUI -->
+    <!-- NOVO CAMPO: TRANSPORTADORA -->
     <div class="form-group">
-      <label for="padPreferencial">8. Escolha o PAD da sua preferência *</label>
+      <label for="transportadora">8. Nome da Transportadora *</label>
+      <input type="text" id="transportadora" name="transportadora" placeholder="Digite o nome da transportadora">
+      <span class="error-message" id="erro-transportadora"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="padPreferencial">9. Escolha o PAD da sua preferência *</label>
       <select id="padPreferencial" name="padPreferencial">
         <option value="">Selecione o PAD principal...</option>
         <option value="FOR - Caucaia-CE">FOR - Caucaia-CE</option>
@@ -125,10 +131,10 @@
     </div>
 
     <div class="form-group">
-  <label for="padAlternativo">9. Caso não esteja disponível o PAD escolhido anteriormente, escolha uma segunda opção *</label>
-  <input type="text" id="padAlternativo" name="padAlternativo" placeholder="Digite aqui sua segunda opção ou observação">
-  <span class="error-message" id="erro-padAlternativo"></span>
-</div>
+      <label for="padAlternativo">10. Caso não esteja disponível o PAD escolhido anteriormente, escolha uma segunda opção *</label>
+      <input type="text" id="padAlternativo" name="padAlternativo" placeholder="Digite aqui sua segunda opção ou observação">
+      <span class="error-message" id="erro-padAlternativo"></span>
+    </div>
 
     <button type="submit" id="btnEnviar">Enviar Cadastro</button>
 
@@ -136,6 +142,7 @@
     <div class="error-box" id="errorBox"></div>
   </form>
 </div>
+
 
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbybN7wTU97IdVVxCRbjoS86tzgBnFTA3NA8vW3JZT1gufDqBvSt92Yw0vrYj3LoaelI/exec";
@@ -175,6 +182,7 @@
     if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
     let soma = 0, resto;
     for (let i = 1; i <= 9; i++) soma += parseInt(cpf[i - 1]) * (11 - i);
+
     resto = (soma * 10) % 11; if (resto === 10 || resto === 11) resto = 0;
     if (resto !== parseInt(cpf[9])) return false;
     soma = 0;
@@ -218,6 +226,9 @@
     const antt = document.getElementById('antt').value;
     if (!antt) { mostrarErro('antt', 'erro-antt', 'Selecione.'); valido = false; } else limparErro('antt', 'erro-antt');
 
+    const transportadora = document.getElementById('transportadora').value.trim();
+    if (transportadora.length < 2) { mostrarErro('transportadora', 'erro-transportadora', 'Informe o nome da transportadora.'); valido = false; } else limparErro('transportadora', 'erro-transportadora');
+
     const padPref = document.getElementById('padPreferencial').value;
     if (!padPref) { mostrarErro('padPreferencial', 'erro-padPreferencial', 'Selecione o PAD principal.'); valido = false; } else limparErro('padPreferencial', 'erro-padPreferencial');
 
@@ -247,6 +258,7 @@
       placaCarreta: document.getElementById('placaCarreta').value,
       eixos: document.getElementById('eixos').value,
       antt: document.getElementById('antt').value,
+      transportadora: document.getElementById('transportadora').value.trim(),
       padPreferencial: document.getElementById('padPreferencial').value,
       padAlternativo: document.getElementById('padAlternativo').value
     };
@@ -261,7 +273,7 @@
         body: new URLSearchParams(dados).toString()
       });
 
-      successBox.textContent = '✅ Cadastro enviado com sucesso!\n\nNome: ' + dados.nome + '\nPAD Principal: ' + dados.padPreferencial + '\nPAD Alternativo: ' + dados.padAlternativo;
+      successBox.textContent = '✅ Cadastro enviado com sucesso!\n\nNome: ' + dados.nome + '\nTransportadora: ' + dados.transportadora + '\nPAD Principal: ' + dados.padPreferencial + '\nPAD Alternativo: ' + dados.padAlternativo;
       successBox.classList.add('show');
       successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
       form.reset();
@@ -286,8 +298,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
